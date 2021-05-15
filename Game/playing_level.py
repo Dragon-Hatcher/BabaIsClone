@@ -179,8 +179,8 @@ class PlayingLevel:
                     if sentence.is_transformation() and sentence.targets_object(go):
                         transforms += sentence.transformation_types()
                 if transforms:
-                    x, y = go.x, go.y
-                    to_add += [GameObject(self, x, y, TEXT_REFERRALS[t]) for t in transforms]
+                    x, y, d = go.x, go.y, go.direction
+                    to_add += [GameObject(self, x, y, TEXT_REFERRALS[t], d) for t in transforms]
                     to_remove.append(go)
 
         for r in to_remove:
