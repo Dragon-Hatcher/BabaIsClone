@@ -3,6 +3,7 @@
 -words muted if not part of sentences
 -xs when rule is canceled
 -color system rework
--border actually stops things
 -fix screen wash doesn't work sometimes
 -don't push state if nothing happened
+-level editor
+-figure out key repeating

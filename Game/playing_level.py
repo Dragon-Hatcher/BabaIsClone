@@ -126,15 +126,18 @@ class PlayingLevel:
                 at_tile = self.gos_at(nx, ny)
                 stop_found = False
                 tile_found = False
-                for being_pushed in at_tile:
-                    is_push = being_pushed.is_push(self.sentences)
-                    is_stop = being_pushed.has_prop(GameObjectType.T_STOP, self.sentences)
-                    if is_stop and (not is_push):
-                        tile_found = True
-                        stop_found = True
-                    elif is_push:
-                        tile_found = True
-                        gos_moving.append(being_pushed)
+                if self.out_of_bounds(nx, ny):
+                    stop_found = True
+                else:
+                    for being_pushed in at_tile:
+                        is_push = being_pushed.is_push(self.sentences)
+                        is_stop = being_pushed.has_prop(GameObjectType.T_STOP, self.sentences)
+                        if is_stop and (not is_push):
+                            tile_found = True
+                            stop_found = True
+                        elif is_push:
+                            tile_found = True
+                            gos_moving.append(being_pushed)
                 if stop_found:
                     gos_moving = []
                     break
@@ -229,3 +232,5 @@ class PlayingLevel:
 
         self.sentences = [parse_sentence(s) for s in found_sentences]
 
+    def out_of_bounds(self, x, y) -> bool:
+        return x < 0 or x >= self.width or y < 0 or y >= self.height
