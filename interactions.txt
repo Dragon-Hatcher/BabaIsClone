@@ -1,0 +1,21 @@
+VERBS:
+    IS
+
+PROPS:
+    YOU
+    WIN
+    PUSH
+    STOP
+
+INTERACTIONS
+    X IS PROP       gives object property
+    X IS X          prevents transformation
+    X IS Y          transforms
+
+    X IS YOU        can be moved with controls
+    X IS PUSH       can be pushed. a line of PUSH can also be pushed. push line can be stopped by a STOP. a PUSH is also a STOP
+    X IS STOP       stops things being pushed
+    X IS WIN        if a YOU is WIN then the level is won or if a YOU intersects a WIN. DEFEAT/SINK take priority
+
+
+    X IS YOU AND STOP <- bug here
