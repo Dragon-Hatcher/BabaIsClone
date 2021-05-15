@@ -4,9 +4,9 @@ import pygame
 
 from Game.directions import Direction
 from Game.game_obect_types import GameObjectType, TILED_OBJECTS
-from Graphics.go_sprite_loc import get_sprite_loc, tiled_sprite_loc
-from Graphics.constants import SPRITE_WIDTH, FPS, WOBBLE_COUNT, SLIDE_TIME, SLIDE_FRAMES
-from Graphics.load_sprite_triple import load_sprite_triple
+from Graphics.color_palette import get_palette
+from Graphics.go_sprite_loc import get_sprites_for, get_sprites_for_tiled
+from Graphics.constants import SPRITE_WIDTH, FPS, WOBBLE_COUNT, SLIDE_FRAMES
 
 
 class GameObjectSprite(pygame.sprite.Sprite):
@@ -23,7 +23,7 @@ class GameObjectSprite(pygame.sprite.Sprite):
 
         self.object_type = go_type
 
-        self.images = load_sprite_triple(get_sprite_loc(go_type, direction, 0))
+        self.images = get_sprites_for(go_type, direction, 0, get_palette(self.grid.theme))
         self.set_scale(grid.scale_factor)
 
         if self.object_type in TILED_OBJECTS:
@@ -37,8 +37,7 @@ class GameObjectSprite(pygame.sprite.Sprite):
         n = self.grid.type_at(self.grid_x + 0, self.grid_y - 1, self.object_type)
         w = self.grid.type_at(self.grid_x - 1, self.grid_y + 0, self.object_type)
         s = self.grid.type_at(self.grid_x - 0, self.grid_y + 1, self.object_type)
-        loc = tiled_sprite_loc(self.object_type, e, n, w, s)
-        self.images = load_sprite_triple(loc)
+        self.images = get_sprites_for_tiled(self.object_type, e, n, w, s, get_palette(self.grid.theme))
         self.set_scale(self.grid.scale_factor)
 
     def update(self) -> None:
@@ -64,7 +63,7 @@ class GameObjectSprite(pygame.sprite.Sprite):
         onto.blit(self.image, rect)
 
     def set_direction(self, d: Direction):
-        self.images = load_sprite_triple(get_sprite_loc(self.object_type, d, 0))
+        self.images = get_sprites_for(self.object_type, d, 0)
         self.set_scale(self.grid.scale_factor)
 
     def set_x(self, x: int):

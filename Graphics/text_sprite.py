@@ -61,7 +61,7 @@ class TextSprite(pygame.sprite.Sprite):
 
 
 def get_letter_triple(letter: string):
-    return load_sprite_triple(LETTER_SPRITE_LOCS[letter.upper()])
+    return load_sprite_triple(LETTER_SPRITE_LOCS[letter.upper()], (255, 255, 255))
 
 
 LETTER_SPRITE_LOCS = {

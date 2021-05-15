@@ -3,14 +3,16 @@ from typing import List, Optional
 import pygame
 
 from Game.game_obect_types import TILED_OBJECTS, GameObjectType
-from Graphics.constants import SPRITE_WIDTH, GRID_BK_COLOR
+from Graphics.color_palette import get_palette, PaletteGroups
+from Graphics.constants import SPRITE_WIDTH
 from Graphics.game_object_sprite import GameObjectSprite
 
 
 class TileGrid(pygame.sprite.Sprite):
 
-    def __init__(self, tiles_wide: int, tiles_high: int):
+    def __init__(self, theme: str, tiles_wide: int, tiles_high: int):
         super(TileGrid, self).__init__()
+        self.theme = theme
         self.tiles_wide = tiles_wide
         self.tiles_high = tiles_high
         self.gos: List[GameObjectSprite] = []
@@ -30,7 +32,7 @@ class TileGrid(pygame.sprite.Sprite):
 
     def draw_onto(self, onto: pygame.Surface, where: pygame.Rect) -> None:
         self.rect.center = where.center
-        pygame.draw.rect(onto, GRID_BK_COLOR, self.rect)
+        pygame.draw.rect(onto, get_palette(self.theme)[PaletteGroups.BK_COLOR], self.rect)
         for go in self.gos:
             if go.object_type in TILED_OBJECTS:
                 go.update_tiled()

@@ -3,8 +3,7 @@ from typing import Optional
 
 import pygame
 
-from Game.game_obect_types import type_from_string
-from Game.playing_level import PlayingLevel
+from Graphics.color_palette import init_palettes
 from Graphics.constants import FPS
 from Graphics.load_level_from_file import load_level
 from Graphics.main_window import MainWindow
@@ -16,10 +15,10 @@ def main():
     global w
 
     pygame.init()
+    w = MainWindow()
+    init_palettes()
 
     level = load_level("level0.txt")
-    w = MainWindow()
-
     w.set_playing_level(level)
 
     clock = pygame.time.Clock()
@@ -35,6 +34,7 @@ def main():
         level.get_tile_grid().update()
         w.draw_grid()
         pygame.display.flip()
+
         clock.tick(FPS)
 
         if level.won and w.win_counter == -1:

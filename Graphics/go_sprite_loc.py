@@ -1,9 +1,8 @@
 from Game.game_obect_types import GameObjectType
+from Graphics.color_palette import MAIN_PALETTE, PALETTE_GROUP_MEMBERSHIP
+from Graphics.load_sprite_triple import load_sprite_triple
 
-"""
-First list = directions
-Second List = animation states
-"""
+
 GO_SPRITE_LOCS = {
     GameObjectType.BABA: [
         [(1, 0), (2, 0), (3, 0), (4, 0), (0, 0)],
@@ -28,6 +27,12 @@ GO_SPRITE_LOCS = {
 }
 
 
+def get_sprites_for(go_type, direction, state, palette=MAIN_PALETTE):
+    loc = get_sprite_loc(go_type, direction, state)
+    color = palette[PALETTE_GROUP_MEMBERSHIP[go_type]]
+    return load_sprite_triple(loc, color)
+
+
 def get_sprite_loc(go_type, direction, state) -> (int, int):
     table = GO_SPRITE_LOCS[go_type]
     if isinstance(table, list):
@@ -38,6 +43,12 @@ def get_sprite_loc(go_type, direction, state) -> (int, int):
             return directions
     else:
         return table
+
+
+def get_sprites_for_tiled(go_type, e, n, w, s, palette):
+    loc = tiled_sprite_loc(go_type, e, n, w, s)
+    color = palette[PALETTE_GROUP_MEMBERSHIP[go_type]]
+    return load_sprite_triple(loc, color)
 
 
 def tiled_sprite_loc(go_type, e, n, w, s):

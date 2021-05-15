@@ -58,7 +58,7 @@ class MainWindow:
     ]
 
     def draw_grid(self) -> None:
-        self.screen.fill(NON_GRID_BK_COLOR)
+        self.screen.fill(self.playing_level.get_ng_bk_color())
         if self.playing_level is not None:
             self.playing_level.get_tile_grid().set_scale_factor(self.find_max_resize())
             draw_rect = self.playing_level.get_tile_grid().get_rect()
@@ -112,7 +112,7 @@ class MainWindow:
                 percent = 1 - ((self.fade_in_counter - NAME_LETTER_FRAMES * 2 - LEVEL_NAME_WAIT - SMALL_WAIT) / SCREEN_WASH_FRAMES)
                 self.draw_screen_wash(percent)
             else:
-                self.screen.fill(NON_GRID_BK_COLOR)
+                self.screen.fill(self.playing_level.get_ng_bk_color())
 
             if self.fade_in_counter < NAME_LETTER_FRAMES:
                 letters_appeared = self.fade_in_counter // FRAMES_PER_WIN_LETTER
@@ -145,8 +145,8 @@ class MainWindow:
             ((x, y), (cx, cy), s) = circle(w, h)
             dx = lerp(x, cx, percent)
             dy = lerp(y, cy, percent)
-            pygame.draw.line(self.screen, NON_GRID_BK_COLOR, (int(x), int(y)), (int(dx), int(dy)), int(s))
-            pygame.draw.circle(self.screen, NON_GRID_BK_COLOR, (int(dx), int(dy)), int(s) / 2)
+            pygame.draw.line(self.screen, self.playing_level.get_ng_bk_color(), (int(x), int(y)), (int(dx), int(dy)), int(s))
+            pygame.draw.circle(self.screen, self.playing_level.get_ng_bk_color(), (int(dx), int(dy)), int(s) / 2)
 
     def set_playing_level(self, playing_level) -> None:
         self.fade_in_counter = 0

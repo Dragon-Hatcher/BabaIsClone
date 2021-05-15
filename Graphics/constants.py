@@ -1,8 +1,6 @@
 from math import ceil
 
 SPRITE_WIDTH = 24
-NON_GRID_BK_COLOR = (21, 25, 31)
-GRID_BK_COLOR = (8, 8, 8)
 FPS = 30
 WOBBLE_COUNT = 3
 TEXT_WOBBLE_TIME = .5

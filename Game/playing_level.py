@@ -7,6 +7,7 @@ from Game.directions import Direction, moved_in_direction
 from Game.game_obect_types import GameObjectType, GOCategory, TEXT_REFERRALS
 from Game.game_object import GameObject
 from Game.sentence import is_valid_sentence, Sentence, parse_sentence
+from Graphics.color_palette import get_palette, PaletteGroups
 from Graphics.tile_grid import TileGrid
 
 
@@ -17,8 +18,9 @@ class RestoreState:
 
 class PlayingLevel:
 
-    def __init__(self, level_name: str, width: int, height: int):
+    def __init__(self, level_name: str, theme: str, width: int, height: int):
         self.level_name = level_name
+        self.theme = theme
         self.width = width
         self.height = height
 
@@ -34,11 +36,14 @@ class PlayingLevel:
 
     def get_tile_grid(self) -> TileGrid:
         if self.tile_grid is None:
-            self.tile_grid = TileGrid(self.width, self.height)
+            self.tile_grid = TileGrid(self.theme, self.width, self.height)
             for go in self.gos:
                 self.tile_grid.add_go(go.get_sprite())
 
         return self.tile_grid
+
+    def get_ng_bk_color(self):
+        return get_palette(self.theme)[PaletteGroups.NON_GRID_BK_COLOR]
 
     def add_go(self, go: GameObject) -> None:
         self.gos.append(go)
@@ -195,7 +200,6 @@ class PlayingLevel:
                 if go.has_prop(GameObjectType.T_YOU, self.sentences):
                     if go.has_prop(GameObjectType.T_WIN, self.sentences):
                         return True
-
                     for other in self.gos_at(go.x, go.y):
                         if other.has_prop(GameObjectType.T_WIN, self.sentences):
                             return True

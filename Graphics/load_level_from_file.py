@@ -10,13 +10,14 @@ def load_level(name: str) -> PlayingLevel:
     file.close()
 
     name_line = text[0]
+    theme_line = text[1]
 
-    size_line = text[1].split("x")
+    size_line = text[2].split("x")
     width, height = int(size_line[0]), int(size_line[1])
 
-    level = PlayingLevel(name_line, width, height)
+    level = PlayingLevel(name_line, theme_line, width, height)
 
-    objects = text[2:]
+    objects = text[3:]
     for o in objects:
         parts = o.split(",")
         t, x, y = type_from_string(parts[0]), int(parts[1]), int(parts[2])
