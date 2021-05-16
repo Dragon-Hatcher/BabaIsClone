@@ -39,7 +39,7 @@ class PlayingLevel:
             self.tile_grid = TileGrid(self.theme, self.width, self.height)
             for go in self.gos:
                 self.tile_grid.add_go(go.get_sprite())
-
+            self.find_sentences(True)
         return self.tile_grid
 
     def get_ng_bk_color(self):
@@ -57,6 +57,7 @@ class PlayingLevel:
     def set_gos(self, gos: List[GameObject]) -> None:
         self.gos = gos
         self.tile_grid.set_gos([go.get_sprite() for go in gos])
+        self.find_sentences(True)
 
     def increase_go_draw_priority(self, go: GameObject):
         self.gos.remove(go)
@@ -96,7 +97,7 @@ class PlayingLevel:
         self.push_restore_state()
         self.find_sentences()
         self.tick_movement(key)
-        self.find_sentences()
+        self.find_sentences(True)
         self.tick_is_transformations()
         self.tick_check_block()
 
@@ -216,7 +217,7 @@ class PlayingLevel:
         rs = self.restore_states.pop().gos
         self.set_gos(rs)
 
-    def find_sentences(self):
+    def find_sentences(self, set_muted=False):
         found_sentences: List[List[GameObject]] = []
 
         def find_continuations(current: List[GameObject], direction: Direction):
@@ -233,6 +234,16 @@ class PlayingLevel:
         for go in self.gos:
             find_continuations([go], Direction.EAST)
             find_continuations([go], Direction.SOUTH)
+
+        if set_muted:
+            not_muted = []
+            for s in found_sentences:
+                for go in s:
+                    not_muted.append(go)
+                    go.get_sprite().set_muted(False)
+            for go in self.gos:
+                if go.object_type.get_category() != GOCategory.OBJECT and go not in not_muted:
+                    go.get_sprite().set_muted(True)
 
         self.sentences = [parse_sentence(s) for s in found_sentences]
 

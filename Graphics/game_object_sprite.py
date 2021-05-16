@@ -17,9 +17,13 @@ class GameObjectSprite(pygame.sprite.Sprite):
         self.grid_x = grid_x
         self.grid_y = grid_y
 
+        self.go_type = go_type
+        self.direction = direction
+
         self.old_x = grid_x
         self.old_y = grid_y
         self.slide_time = 0
+        self.muted = False
 
         self.object_type = go_type
 
@@ -31,6 +35,15 @@ class GameObjectSprite(pygame.sprite.Sprite):
 
         self.wobble_index = 0
         self.image = self.images[self.wobble_index]
+
+    def _update_images(self):
+        self.images = get_sprites_for(self.go_type, self.direction, 0, get_palette(self.grid.theme), self.muted)
+        self.set_scale(self.grid.scale_factor)
+
+    def set_muted(self, muted):
+        if muted != self.muted:
+            self.muted = muted
+            self._update_images()
 
     def update_tiled(self):
         e = self.grid.type_at(self.grid_x + 1, self.grid_y - 0, self.object_type)
@@ -63,8 +76,8 @@ class GameObjectSprite(pygame.sprite.Sprite):
         onto.blit(self.image, rect)
 
     def set_direction(self, d: Direction):
-        self.images = get_sprites_for(self.object_type, d, 0)
-        self.set_scale(self.grid.scale_factor)
+        self.direction = d
+        self._update_images()
 
     def set_x(self, x: int):
         self.old_x = self.grid_x

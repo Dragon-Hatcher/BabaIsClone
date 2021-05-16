@@ -1,11 +1,8 @@
 from math import ceil
-
 import pygame
-
-from Graphics.constants import NON_GRID_BK_COLOR, SPRITE_WIDTH, FPS, WIN_TEXT_LEN, FRAMES_PER_WIN_LETTER, \
+from Graphics.constants import SPRITE_WIDTH, FRAMES_PER_WIN_LETTER, \
     WIN_LETTER_APPEARS, WIN_LETTER_FRAMES, SCREEN_WASH_FRAMES, WIN_TEXT, WIN_END_WAIT, LEVEL_NAME_WAIT, SMALL_WAIT
 from Graphics.text_sprite import TextSprite
-from Graphics.tile_grid import TileGrid
 
 
 class MainWindow:

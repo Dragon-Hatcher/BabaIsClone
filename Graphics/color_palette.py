@@ -1,8 +1,8 @@
 from enum import Enum
 from typing import Dict
-
 from Game.game_obect_types import GameObjectType
 from Graphics.load_sprite_triple import load_palette
+import colorsys
 
 
 class PaletteGroups(Enum):
@@ -18,6 +18,9 @@ class PaletteGroups(Enum):
     TILE = 9
     BK_COLOR = 10
     NON_GRID_BK_COLOR = 11
+    MUTED_YOU = 12
+    MUTED_STOP = 13
+    MUTED_PUSH = 14
 
 
 PALETTE_GROUP_MEMBERSHIP = {
@@ -38,6 +41,15 @@ PALETTE_GROUP_MEMBERSHIP = {
     GameObjectType.T_STOP: PaletteGroups.STOP,
 }
 
+MUTED_LOCATIONS = {
+    PaletteGroups.YOU: PaletteGroups.MUTED_YOU,
+    PaletteGroups.VERB: PaletteGroups.WALL_T,
+    PaletteGroups.WALL_T: PaletteGroups.WALL,
+    PaletteGroups.WIN: PaletteGroups.PUSH,
+    PaletteGroups.STOP: PaletteGroups.MUTED_STOP,
+    PaletteGroups.PUSH: PaletteGroups.MUTED_PUSH
+}
+
 PALETTE_COLOR_LOCATIONS = {
     PaletteGroups.BABA:   (0, 3),
     PaletteGroups.VERB:   (0, 3),
@@ -50,9 +62,11 @@ PALETTE_COLOR_LOCATIONS = {
     PaletteGroups.WALL_T: (0, 1),
     PaletteGroups.TILE:   (0, 0),
     PaletteGroups.BK_COLOR: (0, 4),
-    PaletteGroups.NON_GRID_BK_COLOR: (1, 0)
+    PaletteGroups.NON_GRID_BK_COLOR: (1, 0),
+    PaletteGroups.MUTED_YOU: (4, 0),
+    PaletteGroups.MUTED_STOP: (5, 0),
+    PaletteGroups.MUTED_PUSH: (6, 3)
 }
-
 
 PALETTES: Dict[str, any] = {}
 
@@ -84,16 +98,8 @@ def get_palette(name="DEFAULT"):
     return PALETTES[name]
 
 
-MAIN_PALETTE = {
-    PaletteGroups.BABA:   (255, 255, 255),
-    PaletteGroups.VERB:   (255, 255, 255),
-    PaletteGroups.WIN:    (237, 226, 133),
-    PaletteGroups.YOU:    (217,  57, 106),
-    PaletteGroups.ROCK:   (194, 158,  70),
-    PaletteGroups.WALL:   (41,   49,  65),
-    PaletteGroups.PUSH:   (152, 100,  60),
-    PaletteGroups.STOP:   (75,   92,  28),
-    PaletteGroups.WALL_T: (115, 115, 115),
-    PaletteGroups.TILE:   (36,   36,  36),
-}
-
+def desaturate(rgb):
+    r, g, b = rgb
+    h, s, v = colorsys.rgb_to_hsv(r, g, b)
+    s *= 0.5
+    return colorsys.hsv_to_rgb(h, s, v)

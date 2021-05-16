@@ -1,7 +1,8 @@
-from Game.game_obect_types import GameObjectType
-from Graphics.color_palette import MAIN_PALETTE, PALETTE_GROUP_MEMBERSHIP
-from Graphics.load_sprite_triple import load_sprite_triple
+import sys
 
+from Game.game_obect_types import GameObjectType
+from Graphics.color_palette import PALETTE_GROUP_MEMBERSHIP, desaturate, MUTED_LOCATIONS
+from Graphics.load_sprite_triple import load_sprite_triple
 
 GO_SPRITE_LOCS = {
     GameObjectType.BABA: [
@@ -27,9 +28,19 @@ GO_SPRITE_LOCS = {
 }
 
 
-def get_sprites_for(go_type, direction, state, palette=MAIN_PALETTE):
+def get_sprites_for(go_type, direction, state, palette, muted=False):
     loc = get_sprite_loc(go_type, direction, state)
-    color = palette[PALETTE_GROUP_MEMBERSHIP[go_type]]
+    if not muted:
+        color = palette[PALETTE_GROUP_MEMBERSHIP[go_type]]
+    else:
+        group = PALETTE_GROUP_MEMBERSHIP[go_type]
+        if group not in MUTED_LOCATIONS:
+            color = palette[group]
+            print(f"WARNING: group {group} not in MUTED_LOCATIONS", file=sys.stderr)
+        else:
+            color = palette[MUTED_LOCATIONS[group]]
+    if color is None:
+        print("bad")
     return load_sprite_triple(loc, color)
 
 
