@@ -103,6 +103,7 @@ class PlayingLevel:
 
     def tick_movement(self, key: Optional[Direction]):
         movers: OrderedDict[GameObject: (Direction, int)] = OrderedDict()
+        pushed_by_you = []
 
         def run_movements():
             for mover in movers:
@@ -122,6 +123,10 @@ class PlayingLevel:
 
         def run_move(pusher: GameObject, d: Direction):
             if pusher.has_prop(GameObjectType.T_STOP, self.sentences):
+                return
+
+            pusher_is_you = pusher.has_prop(GameObjectType.T_YOU, self.sentences)
+            if pusher_is_you and pusher in pushed_by_you:
                 return
 
             gos_moving = [pusher]
@@ -150,6 +155,7 @@ class PlayingLevel:
                 else:
                     nx, ny = moved_in_direction(nx, ny, d)
             for moving in gos_moving:
+                if pusher_is_you: pushed_by_you.append(moving)
                 nx, ny = moved_in_direction(moving.x, moving.y, d)
                 moving.set_x(nx)
                 moving.set_y(ny)

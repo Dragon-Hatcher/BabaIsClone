@@ -6,5 +6,4 @@
 -figure out key repeating
 -fix text scroll in to ignore spaces
 -make it so you can't move during intro animation
--bug where X is PUSH and YOU ??
 -reset level button
