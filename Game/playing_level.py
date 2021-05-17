@@ -118,7 +118,7 @@ class PlayingLevel:
                     if mag == 1:
                         to_delete.append(mover)
                     else:
-                        movers[mover] = mag - 1
+                        movers[mover] = (d, mag - 1)
                 for mover in to_delete:
                     del movers[mover]
 
@@ -158,7 +158,7 @@ class PlayingLevel:
             if movers.get(mover, None) is None:
                 movers[mover] = (d, 1)
             elif movers[mover][0] == d:
-                movers[mover] = (d, movers[mover] + 1)
+                movers[mover] = (d, movers[mover][1] + 1)
             else:
                 raise Exception("Moving in multiple directions")
 
@@ -179,6 +179,7 @@ class PlayingLevel:
         to_add = []
         to_remove = []
         for go in self.gos:
+            go.get_sprite().xed = False
             if go.object_type not in protected_objects:
                 transforms = []
                 for sentence in self.sentences:
@@ -188,6 +189,13 @@ class PlayingLevel:
                     x, y, d = go.x, go.y, go.direction
                     to_add += [GameObject(self, x, y, TEXT_REFERRALS[t], d) for t in transforms]
                     to_remove.append(go)
+
+        # find disabled sentences from protected objects
+        for go in protected_objects:
+            for sentence in self.sentences:
+                if sentence.is_transformation() and sentence.targets_type(go):
+                    for o in sentence.objects:
+                        o.get_sprite().xed = True
 
         for r in to_remove:
             self.remove_go(r)

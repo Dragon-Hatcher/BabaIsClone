@@ -1,11 +1,14 @@
+from math import floor
 from typing import List, Optional
 
 import pygame
 
 from Game.game_obect_types import TILED_OBJECTS, GameObjectType
 from Graphics.color_palette import get_palette, PaletteGroups
-from Graphics.constants import SPRITE_WIDTH
+from Graphics.constants import SPRITE_WIDTH, FPS, WOBBLE_COUNT
 from Graphics.game_object_sprite import GameObjectSprite
+from Graphics.go_sprite_loc import X_LOC
+from Graphics.load_sprite_triple import load_sprite_triple
 
 
 class TileGrid(pygame.sprite.Sprite):
@@ -18,9 +21,16 @@ class TileGrid(pygame.sprite.Sprite):
         self.gos: List[GameObjectSprite] = []
         self.gosGroup = pygame.sprite.Group()
         self.scale_factor: Optional[int] = None
+        self.xs = load_sprite_triple(X_LOC, get_palette(theme)[PaletteGroups.XS])
+        self.x_image = None
+        self.wobble_index = 0
         self.set_scale_factor(1)
 
     def update(self) -> None:
+        self.wobble_index += 1 / FPS * WOBBLE_COUNT
+        if self.wobble_index >= len(self.xs):
+            self.wobble_index = 0
+        self.x_image = self.xs[floor(self.wobble_index)]
         self.gosGroup.update()
 
     def set_scale_factor(self, scale_factor: int) -> None:
@@ -29,6 +39,8 @@ class TileGrid(pygame.sprite.Sprite):
             self.rect = self.get_rect()
             for go in self.gos:
                 go.set_scale(scale_factor)
+            for (index, x) in enumerate(self.xs):
+                self.xs[index] = pygame.transform.scale(x, (SPRITE_WIDTH * scale_factor, SPRITE_WIDTH * scale_factor))
 
     def draw_onto(self, onto: pygame.Surface, where: pygame.Rect) -> None:
         self.rect.center = where.center

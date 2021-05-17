@@ -36,6 +36,8 @@ class GameObjectSprite(pygame.sprite.Sprite):
         self.wobble_index = 0
         self.image = self.images[self.wobble_index]
 
+        self.xed = False
+
     def _update_images(self):
         self.images = get_sprites_for(self.go_type, self.direction, 0, get_palette(self.grid.theme), self.muted)
         self.set_scale(self.grid.scale_factor)
@@ -74,6 +76,8 @@ class GameObjectSprite(pygame.sprite.Sprite):
                            where.top + lerp(self.old_y, self.grid_y, slide_percent) * sprite_size,
                            sprite_size, sprite_size)
         onto.blit(self.image, rect)
+        if self.xed:
+            onto.blit(self.grid.x_image, rect)
 
     def set_direction(self, d: Direction):
         self.direction = d

@@ -18,7 +18,7 @@ def main():
     w = MainWindow()
     init_palettes()
 
-    level = load_level("level1.txt")
+    level = load_level("level0.txt")
     w.set_playing_level(level)
 
     clock = pygame.time.Clock()

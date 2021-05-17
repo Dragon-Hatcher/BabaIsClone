@@ -21,6 +21,7 @@ class PaletteGroups(Enum):
     MUTED_YOU = 12
     MUTED_STOP = 13
     MUTED_PUSH = 14
+    XS = 15
 
 
 PALETTE_GROUP_MEMBERSHIP = {
@@ -65,7 +66,8 @@ PALETTE_COLOR_LOCATIONS = {
     PaletteGroups.NON_GRID_BK_COLOR: (1, 0),
     PaletteGroups.MUTED_YOU: (4, 0),
     PaletteGroups.MUTED_STOP: (5, 0),
-    PaletteGroups.MUTED_PUSH: (6, 3)
+    PaletteGroups.MUTED_PUSH: (6, 3),
+    PaletteGroups.XS:   (2, 2),
 }
 
 PALETTES: Dict[str, any] = {}
@@ -96,10 +98,3 @@ def init_palettes():
 def get_palette(name="DEFAULT"):
     global PALETTES
     return PALETTES[name]
-
-
-def desaturate(rgb):
-    r, g, b = rgb
-    h, s, v = colorsys.rgb_to_hsv(r, g, b)
-    s *= 0.5
-    return colorsys.hsv_to_rgb(h, s, v)

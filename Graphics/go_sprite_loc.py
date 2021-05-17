@@ -1,7 +1,7 @@
 import sys
 
 from Game.game_obect_types import GameObjectType
-from Graphics.color_palette import PALETTE_GROUP_MEMBERSHIP, desaturate, MUTED_LOCATIONS
+from Graphics.color_palette import PALETTE_GROUP_MEMBERSHIP, MUTED_LOCATIONS
 from Graphics.load_sprite_triple import load_sprite_triple
 
 GO_SPRITE_LOCS = {
@@ -26,6 +26,9 @@ GO_SPRITE_LOCS = {
     GameObjectType.T_PUSH: (2, 14),
     GameObjectType.T_STOP: (12, 14),
 }
+
+
+X_LOC = (25, 8)
 
 
 def get_sprites_for(go_type, direction, state, palette, muted=False):
