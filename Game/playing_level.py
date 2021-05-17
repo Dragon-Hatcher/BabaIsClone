@@ -112,9 +112,7 @@ class PlayingLevel:
                 to_delete = []
                 for (mover, movement) in movers.items():
                     d, mag = movement
-                    nx, ny = moved_in_direction(mover.x, mover.y, d)
-                    mover.set_x(nx)
-                    mover.set_y(ny)
+                    run_move(mover, d)
                     if mag == 1:
                         to_delete.append(mover)
                     else:
@@ -122,7 +120,7 @@ class PlayingLevel:
                 for mover in to_delete:
                     del movers[mover]
 
-        def find_movement_for_pusher(pusher: GameObject, d: Direction):
+        def run_move(pusher: GameObject, d: Direction):
             if pusher.has_prop(GameObjectType.T_STOP, self.sentences):
                 return
 
@@ -152,10 +150,13 @@ class PlayingLevel:
                 else:
                     nx, ny = moved_in_direction(nx, ny, d)
             for moving in gos_moving:
-                move_go(moving, d)
+                nx, ny = moved_in_direction(moving.x, moving.y, d)
+                moving.set_x(nx)
+                moving.set_y(ny)
+                moving.set_direction(d)
 
         def move_go(mover: GameObject, d: Direction):
-            if movers.get(mover, None) is None:
+            if mover not in movers:
                 movers[mover] = (d, 1)
             elif movers[mover][0] == d:
                 movers[mover] = (d, movers[mover][1] + 1)
@@ -166,10 +167,10 @@ class PlayingLevel:
         if key:
             for go in self.gos:
                 if go.has_prop(GameObjectType.T_YOU, self.sentences):
-                    find_movement_for_pusher(go, key)
-                    go.set_direction(key)
-
+                    move_go(go, key)
         run_movements()
+
+
 
     def tick_is_transformations(self):
         protected_objects = []
