@@ -2,7 +2,6 @@ from enum import Enum
 from typing import Dict
 from Game.game_obect_types import GameObjectType
 from Graphics.load_sprite_triple import load_palette
-import colorsys
 
 
 class PaletteGroups(Enum):
@@ -22,6 +21,9 @@ class PaletteGroups(Enum):
     MUTED_STOP = 13
     MUTED_PUSH = 14
     XS = 15
+
+    def get_location(self) -> (int, int):
+        return PALETTE_COLOR_LOCATIONS[self]
 
 
 PALETTE_GROUP_MEMBERSHIP = {

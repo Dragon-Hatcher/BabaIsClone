@@ -1,4 +1,4 @@
-import pygame as pg
+import pygame
 
 """
 The windows used for the whole game
@@ -11,7 +11,7 @@ def init_window() -> None:
     Initializes the main window.
     """
     global window
-    window = pg.display.set_mode((500, 500), pg.RESIZABLE)
+    window = pg.display.set_mode((500, 500), pygame.RESIZABLE)
     pg.display.set_caption("Baba Is Clone")
 
 

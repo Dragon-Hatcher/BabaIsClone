@@ -8,6 +8,9 @@ class GOCategory(Enum):
     VERB = 2
     PROPERTY = 3
 
+    def is_text(self) -> bool:
+        return self == GOCategory.NOUN or self == GOCategory.VERB or self == GOCategory.PROPERTY
+
 
 class GameObjectType(Enum):
     BABA = 0
@@ -27,8 +30,13 @@ class GameObjectType(Enum):
     T_STOP = 14
 
     def get_category(self) -> GOCategory:
-        v = self.value
-        return GO_CATEGORIES[v]
+        return _GO_CATEGORIES[self.value]
+
+    def object_referral(self):
+        return _TEXT_REFERRALS.get(self, None)
+
+    def is_tiled(self) -> bool:
+        return self in _TILED_OBJECTS
 
 
 def type_from_string(name: str) -> Optional[GameObjectType]:
@@ -38,7 +46,7 @@ def type_from_string(name: str) -> Optional[GameObjectType]:
         return None
 
 
-GO_CATEGORIES = [
+_GO_CATEGORIES = [
     GOCategory.OBJECT,  # BABA
     GOCategory.NOUN,  # T_BABA
     GOCategory.VERB,  # T_IS
@@ -56,13 +64,13 @@ GO_CATEGORIES = [
     GOCategory.PROPERTY,  # T_STOP
 ]
 
-TEXT_REFERRALS = {
+_TEXT_REFERRALS = {
     GameObjectType.T_BABA: GameObjectType.BABA,
     GameObjectType.T_WALL: GameObjectType.WALL,
     GameObjectType.T_ROCK: GameObjectType.ROCK,
     GameObjectType.T_FLAG: GameObjectType.FLAG,
 }
 
-TILED_OBJECTS = {
+_TILED_OBJECTS = {
     GameObjectType.WALL
 }

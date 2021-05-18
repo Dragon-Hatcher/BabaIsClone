@@ -8,3 +8,4 @@
 -make it so you can't move during intro animation
 -reset level button
 -move sprite to top not working
+-words aren't muted at level start

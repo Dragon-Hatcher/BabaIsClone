@@ -3,7 +3,7 @@ from math import floor
 import pygame
 
 from Game.directions import Direction
-from Game.game_obect_types import GameObjectType, TILED_OBJECTS
+from Game.game_obect_types import GameObjectType, _TILED_OBJECTS
 from Graphics.color_palette import get_palette
 from Graphics.go_sprite_loc import get_sprites_for, get_sprites_for_tiled
 from Graphics.constants import SPRITE_WIDTH, FPS, WOBBLE_COUNT, SLIDE_FRAMES
@@ -14,10 +14,10 @@ class GameObjectSprite(pygame.sprite.Sprite):
         super(GameObjectSprite, self).__init__()
 
         self.grid = grid
+
         self.grid_x = grid_x
         self.grid_y = grid_y
-
-        self.go_type = go_type
+        self.object_type = go_type
         self.direction = direction
 
         self.old_x = grid_x
@@ -25,12 +25,10 @@ class GameObjectSprite(pygame.sprite.Sprite):
         self.slide_time = 0
         self.muted = False
 
-        self.object_type = go_type
-
         self.images = get_sprites_for(go_type, direction, 0, get_palette(self.grid.theme))
         self.set_scale(grid.scale_factor)
 
-        if self.object_type in TILED_OBJECTS:
+        if self.object_type.is_tiled():
             self.update_tiled()
 
         self.wobble_index = 0
@@ -39,7 +37,7 @@ class GameObjectSprite(pygame.sprite.Sprite):
         self.xed = False
 
     def _update_images(self):
-        self.images = get_sprites_for(self.go_type, self.direction, 0, get_palette(self.grid.theme), self.muted)
+        self.images = get_sprites_for(self.object_type, self.direction, 0, get_palette(self.grid.theme), self.muted)
         self.set_scale(self.grid.scale_factor)
 
     def set_muted(self, muted):

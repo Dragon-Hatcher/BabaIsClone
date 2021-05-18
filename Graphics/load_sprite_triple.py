@@ -6,22 +6,17 @@ from Graphics.spritesheet import SpriteSheet
 
 sprite_sheet: Optional[SpriteSheet] = None
 
-LOADED_TRIPLES: Dict[
-    Tuple[
-        Tuple[int, int],
-        Tuple[int, int, int]
-    ], List[pygame.Surface]] = {}
+LOADED_TRIPLES: Dict[Tuple[Tuple[int, int], Tuple[int, int, int]], List[pygame.Surface]] = {}
 
 
-def load_sprite_triple(xy, primary: (int, int, int)) -> List[pygame.Surface]:
+def load_sprite_triple(xy: (int, int), primary: (int, int, int)) -> List[pygame.Surface]:
     global sprite_sheet
     global LOADED_TRIPLES
 
     key = (xy, primary)
-    preloaded = LOADED_TRIPLES.get(key, None)
 
-    if preloaded:
-        return preloaded
+    if key in LOADED_TRIPLES:
+        return LOADED_TRIPLES[key]
     else:
         if sprite_sheet is None:
             sprite_sheet = SpriteSheet("Graphics/sprites.png")

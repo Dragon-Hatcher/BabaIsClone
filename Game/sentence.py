@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from Game.game_obect_types import GameObjectType, GOCategory, TEXT_REFERRALS
+from Game.game_obect_types import GameObjectType, GOCategory, _TEXT_REFERRALS
 from Game.game_object import GameObject
 
 
@@ -31,15 +31,14 @@ class Sentence:
 
     def targets_object(self, go: GameObject) -> bool:
         return (self.verb.object_type == GameObjectType.T_IS and
-                TEXT_REFERRALS.get(self.target.object_type, None) == go.object_type)
+                self.target.object_type.object_referral() == go.object_type)
 
     def targets_type(self, go: GameObjectType) -> bool:
-        return (self.verb.object_type == GameObjectType.T_IS and
-                TEXT_REFERRALS.get(self.target.object_type, None) == go)
+        return self.verb.object_type == GameObjectType.T_IS and self.target.object_type.object_referral() == go
 
     def get_protected_objects(self) -> List[GameObjectType]:
         if self.verb.object_type == GameObjectType.T_IS and self.target.object_type == self.attribute.object_type:
-            return [TEXT_REFERRALS[self.target.object_type]]
+            return [self.target.object_type.object_referral()]
         else:
             return []
 

@@ -4,7 +4,7 @@ from typing import List, Optional
 import pygame
 
 from Game.directions import Direction, moved_in_direction
-from Game.game_obect_types import GameObjectType, GOCategory, TEXT_REFERRALS
+from Game.game_obect_types import GameObjectType, GOCategory, _TEXT_REFERRALS
 from Game.game_object import GameObject
 from Game.sentence import is_valid_sentence, Sentence, parse_sentence
 from Graphics.color_palette import get_palette, PaletteGroups
@@ -122,10 +122,10 @@ class PlayingLevel:
                     del movers[mover]
 
         def run_move(pusher: GameObject, d: Direction):
-            if pusher.has_prop(GameObjectType.T_STOP, self.sentences):
+            if pusher.has_prop(GameObjectType.T_STOP):
                 return
 
-            pusher_is_you = pusher.has_prop(GameObjectType.T_YOU, self.sentences)
+            pusher_is_you = pusher.has_prop(GameObjectType.T_YOU)
             if pusher_is_you and pusher in pushed_by_you:
                 return
 
@@ -139,8 +139,8 @@ class PlayingLevel:
                     stop_found = True
                 else:
                     for being_pushed in at_tile:
-                        is_push = being_pushed.is_push(self.sentences)
-                        is_stop = being_pushed.has_prop(GameObjectType.T_STOP, self.sentences)
+                        is_push = being_pushed.is_push()
+                        is_stop = being_pushed.has_prop(GameObjectType.T_STOP)
                         if is_stop and (not is_push):
                             tile_found = True
                             stop_found = True
@@ -173,7 +173,7 @@ class PlayingLevel:
         # YOU movement
         if key:
             for go in self.gos:
-                if go.has_prop(GameObjectType.T_YOU, self.sentences):
+                if go.has_prop(GameObjectType.T_YOU):
                     move_go(go, key)
         run_movements()
 
@@ -187,13 +187,13 @@ class PlayingLevel:
         for go in self.gos:
             go.get_sprite().xed = False
             if go.object_type not in protected_objects:
-                transforms = []
+                transforms: List[GameObjectType] = []
                 for sentence in self.sentences:
                     if sentence.is_transformation() and sentence.targets_object(go):
                         transforms += sentence.transformation_types()
                 if transforms:
                     x, y, d = go.x, go.y, go.direction
-                    to_add += [GameObject(self, x, y, TEXT_REFERRALS[t], d) for t in transforms]
+                    to_add += [GameObject(self, x, y, t.object_referral(), d) for t in transforms]
                     to_remove.append(go)
 
         # find disabled sentences from protected objects
@@ -212,11 +212,11 @@ class PlayingLevel:
 
         def check_for_win() -> bool:
             for go in self.gos:
-                if go.has_prop(GameObjectType.T_YOU, self.sentences):
-                    if go.has_prop(GameObjectType.T_WIN, self.sentences):
+                if go.has_prop(GameObjectType.T_YOU):
+                    if go.has_prop(GameObjectType.T_WIN):
                         return True
                     for other in self.gos_at(go.x, go.y):
-                        if other.has_prop(GameObjectType.T_WIN, self.sentences):
+                        if other.has_prop(GameObjectType.T_WIN):
                             return True
             return False
 

@@ -42,8 +42,6 @@ def get_sprites_for(go_type, direction, state, palette, muted=False):
             print(f"WARNING: group {group} not in MUTED_LOCATIONS", file=sys.stderr)
         else:
             color = palette[MUTED_LOCATIONS[group]]
-    if color is None:
-        print("bad")
     return load_sprite_triple(loc, color)
 
 
