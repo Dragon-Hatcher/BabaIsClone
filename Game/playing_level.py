@@ -160,6 +160,7 @@ class PlayingLevel:
                 moving.set_x(nx)
                 moving.set_y(ny)
                 moving.set_direction(d)
+                self.increase_go_draw_priority(moving)
 
         def move_go(mover: GameObject, d: Direction):
             if mover not in movers:
@@ -175,8 +176,6 @@ class PlayingLevel:
                 if go.has_prop(GameObjectType.T_YOU, self.sentences):
                     move_go(go, key)
         run_movements()
-
-
 
     def tick_is_transformations(self):
         protected_objects = []
