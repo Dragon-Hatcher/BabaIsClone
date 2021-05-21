@@ -91,6 +91,10 @@ class PlayingLevel:
         elif key == pygame.K_x:
             if self.restore_states:
                 self.pop_restore_state()
+        elif key == pygame.K_r:
+            if self.restore_states:
+                self.set_gos(self.restore_states[0].gos)
+                self.restore_states = []
 
     def tick(self, key: Optional[Direction]):
 
