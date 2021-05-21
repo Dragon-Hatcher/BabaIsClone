@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import pygame
 
@@ -103,32 +103,41 @@ class PlayingLevel:
 
     def tick_movement(self, key: Optional[Direction]):
         movers: OrderedDict[GameObject: (Direction, int)] = OrderedDict()
-        pushed_by_you = []
+
+        def sort_movers():
+            def get_sort_order_val(item: Tuple[GameObject, Tuple[Direction, int]]) -> int:
+                if item[1][0] == Direction.EAST:
+                    return item[0].playing_level.width - item[0].x
+                elif item[1][0] == Direction.WEST:
+                    return item[0].x
+                elif item[1][0] == Direction.NORTH:
+                    return item[0].y
+                elif item[1][0] == Direction.SOUTH:
+                    return item[0].playing_level.height - item[0].y
+
+            mover_tuples = [(k, v) for k, v in movers.items()]
+            mover_tuples = sorted(mover_tuples, key=get_sort_order_val)
+            return OrderedDict(mover_tuples)
 
         def run_movements():
-            for mover in movers:
+            sorted_movers = sort_movers()
+
+            for mover in sorted_movers:
                 self.increase_go_draw_priority(mover)
 
-            while len(movers):
+            while len(sorted_movers):
                 to_delete = []
-                for (mover, movement) in movers.items():
+                for (mover, movement) in sorted_movers.items():
                     d, mag = movement
                     run_move(mover, d)
                     if mag == 1:
                         to_delete.append(mover)
                     else:
-                        movers[mover] = (d, mag - 1)
+                        sorted_movers[mover] = (d, mag - 1)
                 for mover in to_delete:
-                    del movers[mover]
+                    del sorted_movers[mover]
 
         def run_move(pusher: GameObject, d: Direction):
-            if pusher.has_prop(GameObjectType.T_STOP):
-                return
-
-            pusher_is_you = pusher.has_prop(GameObjectType.T_YOU)
-            if pusher_is_you and pusher in pushed_by_you:
-                return
-
             gos_moving = [pusher]
             nx, ny = moved_in_direction(pusher.x, pusher.y, d)
             while True:
@@ -155,7 +164,6 @@ class PlayingLevel:
                 else:
                     nx, ny = moved_in_direction(nx, ny, d)
             for moving in gos_moving:
-                if pusher_is_you: pushed_by_you.append(moving)
                 nx, ny = moved_in_direction(moving.x, moving.y, d)
                 moving.set_x(nx)
                 moving.set_y(ny)
