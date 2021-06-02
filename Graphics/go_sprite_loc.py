@@ -25,6 +25,17 @@ GO_SPRITE_LOCS = {
     GameObjectType.T_WIN: (17, 14),
     GameObjectType.T_PUSH: (2, 14),
     GameObjectType.T_STOP: (12, 14),
+    GameObjectType.GRASS: (0, 17),
+    GameObjectType.WATER: (16, 19),
+    GameObjectType.T_WATER: (28, 11),
+    GameObjectType.T_SINK: (9, 14),
+    GameObjectType.SKULL: [(8, 5), (9, 5), (10, 5), (11, 5)],
+    GameObjectType.T_SKULL: (16, 11),
+    GameObjectType.T_DEFEAT: (5, 13),
+    GameObjectType.LAVA: (16, 19),
+    GameObjectType.T_LAVA: (24, 10),
+    GameObjectType.T_HOT: (12, 13),
+    GameObjectType.T_MELT: (14, 13),
 }
 
 

@@ -28,6 +28,17 @@ class GameObjectType(Enum):
     T_WIN = 12
     T_PUSH = 13
     T_STOP = 14
+    GRASS = 15
+    WATER = 16
+    T_WATER = 17
+    T_SINK = 18
+    SKULL = 19
+    T_SKULL = 20
+    T_DEFEAT = 21
+    LAVA = 22
+    T_LAVA = 23
+    T_HOT = 24
+    T_MELT = 25
 
     def get_category(self) -> GOCategory:
         return _GO_CATEGORIES[self.value]
@@ -62,6 +73,17 @@ _GO_CATEGORIES = [
     GOCategory.PROPERTY,  # T_WIN
     GOCategory.PROPERTY,  # T_PUSH
     GOCategory.PROPERTY,  # T_STOP
+    GOCategory.OBJECT,  # GRASS
+    GOCategory.OBJECT,  # WATER
+    GOCategory.NOUN,  # T_WATER
+    GOCategory.PROPERTY,  # T_SINK
+    GOCategory.OBJECT,  # SKULL
+    GOCategory.NOUN,  # T_SKULL
+    GOCategory.PROPERTY,  # T_DEFEAT
+    GOCategory.OBJECT,  # LAVA
+    GOCategory.NOUN,  # T_LAVA
+    GOCategory.PROPERTY,  # T_HOT
+    GOCategory.PROPERTY,  # T_MELT
 ]
 
 _TEXT_REFERRALS = {
@@ -69,8 +91,14 @@ _TEXT_REFERRALS = {
     GameObjectType.T_WALL: GameObjectType.WALL,
     GameObjectType.T_ROCK: GameObjectType.ROCK,
     GameObjectType.T_FLAG: GameObjectType.FLAG,
+    GameObjectType.T_WATER: GameObjectType.WATER,
+    GameObjectType.T_SKULL: GameObjectType.SKULL,
+    GameObjectType.T_LAVA: GameObjectType.LAVA,
 }
 
 _TILED_OBJECTS = {
-    GameObjectType.WALL
+    GameObjectType.WALL,
+    GameObjectType.GRASS,
+    GameObjectType.WATER,
+    GameObjectType.LAVA,
 }

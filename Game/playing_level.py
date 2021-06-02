@@ -232,8 +232,27 @@ class PlayingLevel:
                             return True
             return False
 
+        def do_sink():
+            for go in self.gos:
+                if go.has_prop(GameObjectType.T_SINK):
+                    at = self.gos_at(go.x, go.y)
+                    if len(at) > 1:
+                        for r in at:
+                            self.remove_go(r)
+
+        def do_defeat():
+            for go in self.gos:
+                if go.has_prop(GameObjectType.T_DEFEAT):
+                    at = self.gos_at(go.x, go.y)
+                    for r in at:
+                        if r.has_prop(GameObjectType.T_YOU):
+                            self.remove_go(r)
+
         if check_for_win():
             self.won = True
+
+        do_sink()
+        do_defeat()
 
     def push_restore_state(self) -> None:
         rs = RestoreState([go.copy() for go in self.gos])

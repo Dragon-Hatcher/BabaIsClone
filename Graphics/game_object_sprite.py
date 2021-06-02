@@ -3,7 +3,7 @@ from math import floor
 import pygame
 
 from Game.directions import Direction
-from Game.game_obect_types import GameObjectType, _TILED_OBJECTS
+from Game.game_obect_types import GameObjectType
 from Graphics.color_palette import get_palette
 from Graphics.go_sprite_loc import get_sprites_for, get_sprites_for_tiled
 from Graphics.constants import SPRITE_WIDTH, FPS, WOBBLE_COUNT, SLIDE_FRAMES

@@ -21,6 +21,13 @@ class PaletteGroups(Enum):
     MUTED_STOP = 13
     MUTED_PUSH = 14
     XS = 15
+    GRASS = 16
+    WATER = 17
+    MUTED_WATER = 18
+    SKULL = 19
+    MUTED_SKULL = 20
+    LAVA = 21
+    MUTED_LAVA = 22
 
     def get_location(self) -> (int, int):
         return PALETTE_COLOR_LOCATIONS[self]
@@ -42,6 +49,17 @@ PALETTE_GROUP_MEMBERSHIP = {
     GameObjectType.T_WIN:  PaletteGroups.WIN,
     GameObjectType.T_PUSH: PaletteGroups.PUSH,
     GameObjectType.T_STOP: PaletteGroups.STOP,
+    GameObjectType.GRASS:  PaletteGroups.GRASS,
+    GameObjectType.WATER:  PaletteGroups.WATER,
+    GameObjectType.T_WATER: PaletteGroups.WATER,
+    GameObjectType.T_SINK: PaletteGroups.WATER,
+    GameObjectType.SKULL:  PaletteGroups.SKULL,
+    GameObjectType.T_SKULL: PaletteGroups.SKULL,
+    GameObjectType.T_DEFEAT: PaletteGroups.SKULL,
+    GameObjectType.LAVA: PaletteGroups.LAVA,
+    GameObjectType.T_LAVA: PaletteGroups.LAVA,
+    GameObjectType.T_HOT: PaletteGroups.LAVA,
+    GameObjectType.T_MELT: PaletteGroups.WATER,
 }
 
 MUTED_LOCATIONS = {
@@ -50,7 +68,10 @@ MUTED_LOCATIONS = {
     PaletteGroups.WALL_T: PaletteGroups.WALL,
     PaletteGroups.WIN: PaletteGroups.PUSH,
     PaletteGroups.STOP: PaletteGroups.MUTED_STOP,
-    PaletteGroups.PUSH: PaletteGroups.MUTED_PUSH
+    PaletteGroups.PUSH: PaletteGroups.MUTED_PUSH,
+    PaletteGroups.WATER: PaletteGroups.MUTED_WATER,
+    PaletteGroups.SKULL: PaletteGroups.MUTED_SKULL,
+    PaletteGroups.LAVA: PaletteGroups.MUTED_LAVA,
 }
 
 PALETTE_COLOR_LOCATIONS = {
@@ -70,6 +91,13 @@ PALETTE_COLOR_LOCATIONS = {
     PaletteGroups.MUTED_STOP: (5, 0),
     PaletteGroups.MUTED_PUSH: (6, 3),
     PaletteGroups.XS:   (2, 2),
+    PaletteGroups.GRASS:  (5, 0),
+    PaletteGroups.WATER: (1, 3),
+    PaletteGroups.MUTED_WATER: (1, 2),
+    PaletteGroups.SKULL: (2, 1),
+    PaletteGroups.MUTED_SKULL: (2, 0),
+    PaletteGroups.LAVA: (2, 3),
+    PaletteGroups.MUTED_LAVA: (2, 2),
 }
 
 PALETTES: Dict[str, any] = {}
