@@ -1,10 +1,8 @@
+import pygame
 from collections import OrderedDict
 from typing import List, Optional, Tuple
-
-import pygame
-
 from Game.directions import Direction, moved_in_direction
-from Game.game_obect_types import GameObjectType, GOCategory, _TEXT_REFERRALS
+from Game.game_obect_types import GameObjectType, GOCategory
 from Game.game_object import GameObject
 from Game.sentence import is_valid_sentence, Sentence, parse_sentence
 from Graphics.color_palette import get_palette, PaletteGroups

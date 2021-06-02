@@ -1,6 +1,5 @@
 import string
 from math import floor
-
 import pygame
 from Graphics.constants import FPS, WOBBLE_COUNT, SPRITE_WIDTH, TEXT_SQUISH, TEXT_WOBBLE_TIME
 from Graphics.load_sprite_triple import load_sprite_triple

@@ -1,5 +1,4 @@
 import sys
-
 from Game.game_obect_types import GameObjectType
 from Graphics.color_palette import PALETTE_GROUP_MEMBERSHIP, MUTED_LOCATIONS
 from Graphics.load_sprite_triple import load_sprite_triple

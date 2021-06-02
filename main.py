@@ -1,13 +1,8 @@
 import sys
 from typing import Optional
-
 import pygame
-
-from Game.directions import Direction
-from Game.game_obect_types import GameObjectType
-from Game.game_object import GameObject
 from Graphics.color_palette import init_palettes
-from Graphics.constants import FPS, SPRITE_WIDTH
+from Graphics.constants import FPS
 from Graphics.load_level_from_file import load_level
 from Graphics.main_window import MainWindow
 
@@ -34,8 +29,8 @@ def main():
     while True:
         event = pygame.event.poll()
         if event.type == pygame.QUIT:
-            for go in level.gos:
-                print(f"{go.object_type},{go.x},{go.y}")
+            # for go in level.gos:
+            #     print(f"{go.object_type},{go.x},{go.y}")
 
             pygame.quit()
             sys.exit(0)

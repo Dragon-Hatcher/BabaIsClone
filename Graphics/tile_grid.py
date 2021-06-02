@@ -1,9 +1,7 @@
 from math import floor
 from typing import List, Optional
-
 import pygame
-
-from Game.game_obect_types import _TILED_OBJECTS, GameObjectType
+from Game.game_obect_types import GameObjectType
 from Graphics.color_palette import get_palette, PaletteGroups
 from Graphics.constants import SPRITE_WIDTH, FPS, WOBBLE_COUNT
 from Graphics.game_object_sprite import GameObjectSprite
@@ -46,7 +44,7 @@ class TileGrid(pygame.sprite.Sprite):
         self.rect.center = where.center
         pygame.draw.rect(onto, get_palette(self.theme)[PaletteGroups.BK_COLOR], self.rect)
         for go in self.gos:
-            if go.object_type in _TILED_OBJECTS:
+            if go.object_type.is_tiled():
                 go.update_tiled()
             go.draw_onto(onto, where)
 

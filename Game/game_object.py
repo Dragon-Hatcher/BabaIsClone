@@ -1,5 +1,3 @@
-from typing import Optional, List
-
 from Game.directions import Direction
 from Game.game_obect_types import GameObjectType, GOCategory
 from Graphics.game_object_sprite import GameObjectSprite

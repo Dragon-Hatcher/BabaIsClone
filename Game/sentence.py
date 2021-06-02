@@ -1,6 +1,5 @@
 from typing import List, Optional
-
-from Game.game_obect_types import GameObjectType, GOCategory, _TEXT_REFERRALS
+from Game.game_obect_types import GameObjectType, GOCategory
 from Game.game_object import GameObject
 
 

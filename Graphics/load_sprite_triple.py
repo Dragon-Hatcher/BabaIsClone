@@ -1,10 +1,11 @@
 import pygame
 from typing import List, Optional, Dict, Tuple
-
 from Graphics.constants import SPRITE_WIDTH, WOBBLE_COUNT
 from Graphics.spritesheet import SpriteSheet
 
+
 sprite_sheet: Optional[SpriteSheet] = None
+
 
 LOADED_TRIPLES: Dict[Tuple[Tuple[int, int], Tuple[int, int, int]], List[pygame.Surface]] = {}
 
