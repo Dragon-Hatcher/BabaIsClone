@@ -246,11 +246,20 @@ class PlayingLevel:
                         if r.has_prop(GameObjectType.T_YOU):
                             self.remove_go(r)
 
+        def do_melt():
+            for go in self.gos:
+                if go.has_prop(GameObjectType.T_HOT):
+                    at = self.gos_at(go.x, go.y)
+                    for r in at:
+                        if r.has_prop(GameObjectType.T_MELT):
+                            self.remove_go(r)
+
         if check_for_win():
             self.won = True
 
         do_sink()
         do_defeat()
+        do_melt()
 
     def push_restore_state(self) -> None:
         rs = RestoreState([go.copy() for go in self.gos])

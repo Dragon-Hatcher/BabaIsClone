@@ -1,8 +1,12 @@
 import sys
 from typing import Optional
 import pygame
+
+from Game.directions import Direction
+from Game.game_obect_types import GameObjectType
+from Game.game_object import GameObject
 from Graphics.color_palette import init_palettes
-from Graphics.constants import FPS
+from Graphics.constants import FPS, SPRITE_WIDTH
 from Graphics.load_level_from_file import load_level
 from Graphics.main_window import MainWindow
 
@@ -13,6 +17,8 @@ def main():
     global w
 
     pygame.init()
+    pygame.key.set_repeat(200, 200)
+
     w = MainWindow()
     init_palettes()
 
@@ -41,10 +47,10 @@ def main():
             #         adding_go.get_sprite().object_type = GameObjectType(adding_go.object_type.value)
             #         adding_go.get_sprite()._update_images()
             # elif event.key == 45:
-            #     if adding_go.object_type.value != 0:
-            #         adding_go.object_type = GameObjectType(adding_go.object_type.value - 1)
-            #         adding_go.get_sprite().object_type = GameObjectType(adding_go.object_type.value)
-            #         adding_go.get_sprite()._update_images()
+                # if adding_go.object_type.value != 0:
+                #     adding_go.object_type = GameObjectType(adding_go.object_type.value - 1)
+                #     adding_go.get_sprite().object_type = GameObjectType(adding_go.object_type.value)
+                #     adding_go.get_sprite()._update_images()
 
             level.receive_input(event.key)
         # elif event.type == pygame.MOUSEBUTTONUP:
